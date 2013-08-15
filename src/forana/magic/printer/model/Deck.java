@@ -7,10 +7,20 @@ public class Deck {
 	public final Collection<Card> cards;
 	
 	public Deck() {
-		this(new LinkedList<Card>());
+		this.cards = new LinkedList<>();
 	}
 	
-	public Deck(Collection<Card> cards) {
-		this.cards = cards;
+	public void add(Card card) {
+		this.cards.add(card);
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		for (Card card : this.cards) {
+			s.append(card.toString());
+			s.append("\n");
+		}
+		return s.toString();
 	}
 }

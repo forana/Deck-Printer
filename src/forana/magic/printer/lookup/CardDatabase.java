@@ -27,7 +27,7 @@ public class CardDatabase implements Serializable {
 		this.cardMap.get(card.name).add(card);
 	}
 	
-	public Collection<Card> getIds (String name) {
+	public Collection<Card> getCards (String name) {
 		return this.cardMap.get(name);
 	}
 	

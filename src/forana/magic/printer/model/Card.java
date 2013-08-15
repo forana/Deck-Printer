@@ -16,7 +16,7 @@ public class Card implements Comparable<Card>, Serializable {
 	}
 	
 	public int compareTo(Card other) {
-		return this.set.compareTo(other.set);
+		return (int)(this.id - other.id);
 	}
 	
 	@Override
@@ -27,5 +27,10 @@ public class Card implements Comparable<Card>, Serializable {
 	@Override
 	public boolean equals(Object other) {
 		return other instanceof Card && this.name.equals(((Card)other).name) && this.set.equals(((Card)other).set);
+	}
+	
+	@Override
+	public String toString() {
+		return this.name + " (" + this.set + ", " + this.id + ")";
 	}
 }
