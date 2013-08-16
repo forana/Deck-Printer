@@ -16,31 +16,39 @@ public class DeckLoader {
 		Deck deck = new Deck();
 		
 		BufferedReader r = new BufferedReader(new FileReader(file));
-		while (r.ready()) {
-			String line = r.readLine().trim();
-			String[] pieces = line.split("\t", 2);
-			try {
-				int count = Integer.parseInt(pieces[0]);
-				String name = pieces[1];
-				name = name.replace("AE", "Æ");
-				
-				Collection<Card> cards = db.getCards(name);
-				Card card = null;
-				if (cards == null) {
-					throw new IOException("Unable to find match for '" + name + "'");
+		try {
+			while (r.ready()) {
+				String line = r.readLine().trim();
+				if (!line.equals("")) {
+					String[] pieces = line.split("\t", 2);
+					if (pieces.length == 2) {
+						try {
+							int count = Integer.parseInt(pieces[0]);
+							String name = pieces[1];
+							name = name.replace("AE", "Æ");
+							
+							Collection<Card> cards = db.getCards(name);
+							Card card = null;
+							if (cards == null) {
+								throw new IOException("Unable to find match for '" + name + "'");
+							}
+							for (Card iCard : cards) {
+								card = iCard;
+							}
+							
+							for (int i=0; i<count; i++) {
+								deck.add(card);
+							}
+							
+						} catch (NumberFormatException e) {
+							throw new IOException(e);
+						}
+					}
 				}
-				for (Card iCard : cards) {
-					card = iCard;
-				}
-				
-				for (int i=0; i<count; i++) {
-					deck.add(card);
-				}
-				
-			} catch (NumberFormatException e) {
 			}
+		} finally {
+			r.close();
 		}
-		r.close();
 		
 		return deck;
 	}

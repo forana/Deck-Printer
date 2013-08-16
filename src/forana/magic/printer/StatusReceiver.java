@@ -1,4 +1,4 @@
-package forana.magic.printer.lookup;
+package forana.magic.printer;
 
 public interface StatusReceiver {
 	public void setCompleted(int completed);

@@ -10,6 +10,7 @@ import java.util.Collection;
 
 import forana.magic.gatherer.CardStub;
 import forana.magic.gatherer.Gatherer;
+import forana.magic.printer.StatusReceiver;
 import forana.magic.printer.model.Card;
 
 public class CardDatabaseManager {

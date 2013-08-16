@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import forana.magic.printer.lookup.CardDatabase;
 import forana.magic.printer.lookup.CardDatabaseManager;
-import forana.magic.printer.lookup.StatusReceiver;
 
 public class DatabaseUpdateTest {
 	public static void main(String[] args) throws IOException {
