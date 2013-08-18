@@ -14,10 +14,10 @@ This program is not intended to make fake Magic cards (in fact, the pictures it 
 
 Prerequisite: You must have the Oracle Java 7 (or newer) JRE installed. All major operating systems _should_ work, but I've only tested this on Windows 7 and OSX Mountain Lion.
 
-+ Download [printer.zip](dist/printer.zip)
-+ Extract
-+ Double-click deckprinter.jar
-+ Enjoy!
+1. Download [printer.zip](dist/printer.zip)
+2. Extract
+3. Double-click deckprinter.jar
+4. Enjoy!
 
 If double-clicking deckprinter.jar does not work, open a terminal/command prompt window at the extracted directory and type
 	java -jar deckprinter.jar
