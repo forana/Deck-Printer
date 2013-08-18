@@ -36,3 +36,5 @@ If double-clicking deckprinter.jar does not work, open a terminal/command prompt
 + Allow import of sets from Magic Set Editor
 + Allow use of custom image sets instead of just Gatherer
 + Support more import formats
++ Clean up code so I'm not embarrassed to show it here
++ 
