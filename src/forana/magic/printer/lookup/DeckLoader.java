@@ -20,7 +20,7 @@ public class DeckLoader {
 			while (r.ready()) {
 				String line = r.readLine().trim();
 				if (!line.equals("")) {
-					String[] pieces = line.split("\t", 2);
+					String[] pieces = line.split("\\s", 2);
 					if (pieces.length == 2) {
 						try {
 							int count = Integer.parseInt(pieces[0]);

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import forana.magic.printer.image.ImageCache;
 import forana.magic.printer.lookup.CardDatabase;
@@ -16,28 +17,25 @@ import forana.magic.printer.lookup.DeckLoader;
 import forana.magic.printer.model.Card;
 import forana.magic.printer.model.Deck;
 
-public class App {
+public class DeckApp {
 	public static void main(String[] args) throws Exception {
 		CardDatabase db;
 		ImageCache.init();
 		
-		StatusReceiver s = new StatusReceiver() {
-			public void setTotal(int dc) {}
-			public void setCompleted(int dc) {}
-			public void setStatus(String status) {
-				System.out.println(">> " + status);
-			}
-		};
+		StatusReceiver ns = new NullReceiver();
+		ProgressPane ps = new ProgressPane("Loading database", 400, 100);
 		
 		try {
 			db = CardDatabaseManager.getCachedDatabase();
-			System.out.println("db loaded from cache");
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 			db = new CardDatabase();
-			System.out.println("created new db");
+			JOptionPane.showMessageDialog(ps, "Error loading database - had to start a new one. Long wait ahead.");
 		}
 		
+		CardDatabaseManager.updateDatabase(db, ps);
+		
+		ps.setStatus("Opening deck");
 		JFileChooser chooser = new JFileChooser();
 		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 			File file = chooser.getSelectedFile();
@@ -46,14 +44,17 @@ public class App {
 			
 			List<Image> images = new ArrayList<>();
 			for (Card card : deck.cards) {
-				images.add(ImageCache.get(card.id, s));
+				images.add(ImageCache.get(card.id, ns));
 			}
 			
 			PrinterJob job = PrinterJob.getPrinterJob();
-			job.setPrintable(new PrintablePage(images, s));
+			job.setPrintable(new PrintablePage(images, ps));
 			if (job.printDialog()) {
 				job.print();
 			}
 		}
+		
+		ps.setVisible(false);
+		ps.dispose();
 	}
 }

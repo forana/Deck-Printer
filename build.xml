@@ -1,0 +1,40 @@
+<project default="build-zip">
+	<property name="identifier" value="forana.magic.printer.DeckApp" />
+	
+	<property name="deckprinterjar" value="deckprinter" />
+	<property name="commanderprinterjar" value="commanderprinter" />
+	<property name="zipname" value="printer.zip" />
+	
+	<property name="src" location="src" />
+	<property name="bin" location="bin" />
+	
+	<target name="compile">
+		<javac srcdir="${src}" destdir="${bin}" includeantruntime=""/>
+	</target>
+	
+	<target name="build-deck" depends="compile">
+		<jar jarfile="dist/${deckprinterjar}.jar" basedir="${bin}">
+			<fileset dir="." includes="${resourceDir}/**"/>
+			<archives>
+				<zips>
+					<fileset dir="libs" includes="**/*.jar" />
+				</zips>
+			</archives>
+			<manifest>
+				<attribute name="Main-Class" value="${identifier}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="build-commander" depends="compile">
+		<!-- TODO -->
+	</target>
+	
+	<target name="build-zip" depends="build-deck">
+		<zip destfile="dist/${zipname}">
+			<fileset dir="dist" includes="*.jar" excludes="**.DS_Store" />
+			<fileset dir="." includes="cards.db" />
+			<fileset dir="." includes="LICENSE" />
+		</zip>
+	</target>
+</project>
