@@ -2,6 +2,7 @@
 Magic the Gathering is &trade; and &copy; Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved.
 
 The intent of this program is to provide a way to do the following:
+
 1. Test out decks before buying single cards.
 2. Combine fanmade cards and official cards to be used on equal footing in casual games.
 3. Make copies of valuable cards to play with so that they don't get damaged.
