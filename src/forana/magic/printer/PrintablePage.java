@@ -41,6 +41,9 @@ public class PrintablePage implements Printable {
 			double t = width;
 			width = height;
 			height = t;
+			int it = xoff;
+			xoff = yoff;
+			yoff = it;
 		}
 		
 		int hcards = (int)Math.floor(width / SCALED_CARD_WIDTH);
