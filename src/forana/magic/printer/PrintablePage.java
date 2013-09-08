@@ -35,9 +35,8 @@ public class PrintablePage implements Printable {
 		g2.scale(SCALE, SCALE);
 		
 		if (shouldRotate(width, height, SCALED_CARD_WIDTH, SCALED_CARD_HEIGHT)) {
-			g2.translate(-xoff, -yoff);
 			g2.rotate(Math.PI/2);
-			g2.translate(yoff, xoff-width);
+			g2.translate(0, -(width + 2 * xoff));
 			double t = width;
 			width = height;
 			height = t;
@@ -49,6 +48,9 @@ public class PrintablePage implements Printable {
 		int hcards = (int)Math.floor(width / SCALED_CARD_WIDTH);
 		int vcards = (int)Math.floor(height / SCALED_CARD_HEIGHT);
 		int cardsPerPage = hcards * vcards;
+		
+		int xCentering = (int)Math.floor((width - (hcards * SCALED_CARD_WIDTH)) / 2);
+		int yCentering = (int)Math.floor((height - (vcards * SCALED_CARD_HEIGHT)) / 2);
 		
 		int startIndex = cardsPerPage * index;
 		if (startIndex >= this.images.size()) {
@@ -62,7 +64,10 @@ public class PrintablePage implements Printable {
 		while (cardIndex < startIndex + hcards * vcards && cardIndex < this.images.size()) {
 			Image scaled = this.images.get(cardIndex).getScaledInstance(SCALED_CARD_WIDTH, SCALED_CARD_HEIGHT, Image.SCALE_SMOOTH);
 			
-			g.drawImage(scaled, xoff + h * SCALED_CARD_WIDTH, yoff + v * SCALED_CARD_HEIGHT, null);
+			g.drawImage(scaled,
+				xoff + xCentering + h * SCALED_CARD_WIDTH,
+				yoff + yCentering + v * SCALED_CARD_HEIGHT,
+				null);
 			
 			h++;
 			if (h == hcards) {
