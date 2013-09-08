@@ -1,7 +1,7 @@
 package forana.magic.printer.image;
 
-import java.awt.Image;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,8 +10,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.imageio.ImageIO;
 
 import forana.magic.gatherer.Gatherer;
 import forana.magic.printer.StatusReceiver;
@@ -27,7 +25,7 @@ public class ImageCache {
 		
 		File dir = new File(IMAGE_DIR);
 		if (!dir.exists() && !dir.mkdir()) {
-			throw new IOException("Tried to create directory '" + IMAGE_DIR + "' but failed - check that you can permissions for this folder");
+			throw new IOException("Tried to create directory '" + IMAGE_DIR + "' but failed - check that you have permissions for this folder");
 		}
 		for (File file : dir.listFiles()) {
 			String lname = file.getName().toLowerCase();
@@ -40,7 +38,7 @@ public class ImageCache {
 		}
 	}
 	
-	public static Image get(long id, StatusReceiver receiver) throws IOException {
+	public static File get(long id, StatusReceiver receiver) throws IOException {
 		receiver.setStatus("Getting image for ID " + id);
 		
 		File file = fileMap.get(id);
@@ -49,8 +47,7 @@ public class ImageCache {
 			file = save(id, receiver);
 		}
 		
-		receiver.setStatus("Loading " + file.getName());
-		return ImageIO.read(file);
+		return file;
 	}
 	
 	private static File save(long id, StatusReceiver receiver) throws IOException {
@@ -83,5 +80,32 @@ public class ImageCache {
 		fileMap.put(id, file);
 		
 		return file;
+	}
+	
+	public static File migrateAndCache(String setName, File source, StatusReceiver sr) throws IOException {
+		String dir = IMAGE_DIR + File.separator + setName.hashCode() + File.separator;
+		File dirFile = new File(dir);
+		if (!dirFile.exists() && !dirFile.mkdirs()) {
+			throw new IOException("Unable to create directory '" + dir + "' - check that you have the right permissions for this.");
+		}
+		File dest = new File(dir + source.getName());
+		if (!dest.exists() && !dest.createNewFile()) {
+			throw new IOException("Unable to create file '" + dest.getPath() + "' - check that you have the right permissions for this.");
+		}
+		
+		sr.setStatus("Copying " + source.getName() + " to " + dir);
+		
+		InputStream in = new FileInputStream(source);
+		OutputStream out = new FileOutputStream(dest);
+		
+		int read;
+		while ((read = in.read()) != -1) {
+			out.write(read);
+		}
+		
+		in.close();
+		out.close();
+		
+		return dest;
 	}
 }

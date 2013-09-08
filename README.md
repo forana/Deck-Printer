@@ -10,11 +10,9 @@ The intent of this program is to provide a way to do the following:
 This program is not intended to make fake Magic cards (in fact, the pictures it will print are fairly low quality).
 
 ## Running
-<b>NOTE: This program isn't really finished. Consider the current state "extreme alpha" - your results may vary wildly (though I'd like to hear about them).</b>
+Prerequisite: You must have a Java 7 (or newer) JRE installed. I'd suggest using the Oracle JRE, as I haven't tested any others - but others might work. All major operating systems _should_ work, but I've only tested this on Windows 7 and OSX Mountain Lion.
 
-Prerequisite: You must have the Oracle Java 7 (or newer) JRE installed. All major operating systems _should_ work, but I've only tested this on Windows 7 and OSX Mountain Lion.
-
-1. Download [printer.zip](dist/printer.zip)
+1. Download [printer.zip](https://github.com/forana/Deck-Printer/raw/master/dist/printer.zip)
 2. Extract
 3. Double-click deckprinter.jar
 4. Enjoy!
@@ -27,12 +25,24 @@ If double-clicking deckprinter.jar does not work, open a terminal/command prompt
 + MTGO (this will also let you import decks from Wizards' articles)
 + tappedout.net text export
 
+In general, something like this will work:
+	1	Some Card
+	4	Some Other Card
+	2	Yet Another Card
+
+## Importing Custom Sets
+A single folder containing images with the intended card directly inside it can be imported as a custom set. Example structure:
+	Custom Set
+	 > Card 1.jpg
+	 > Card 2.jpg
+	 > Card 3.jpg
+
+Supported image formats are JPG and PNG.
+
 ## TODO
-+ Nicer UI
 + bat/sh scripts for running jar
-+ Allow to choose which image to use for each set, instead of only the highest multiverse ID.
-+ Allow printing of commander-sized cards
-+ Allow printing of archenemy / planechase / vanguard cards.
-+ Allow import of sets from Magic Set Editor
-+ Allow use of custom image sets instead of just Gatherer
-+ Support more import formats
++ Allow printing of oversized (commander / archenemy / planechase / vanguard) cards at correct size.
++ Corner normalization
++ Center printed page on the paper
++ Zoom in on hover (JTooltip is ridiculously unflexible)
++ Make code readable/resolve cleanup TODOs

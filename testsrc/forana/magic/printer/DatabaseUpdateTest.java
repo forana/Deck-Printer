@@ -3,14 +3,14 @@ package forana.magic.printer;
 import java.io.IOException;
 
 import forana.magic.printer.lookup.CardDatabase;
-import forana.magic.printer.lookup.CardDatabaseManager;
+import forana.magic.printer.lookup.GathererManager;
 
 public class DatabaseUpdateTest {
 	public static void main(String[] args) throws IOException {
 		CardDatabase db;
 		
 		try {
-			db = CardDatabaseManager.getCachedDatabase();
+			db = CardDatabase.getCachedDatabase(new NullReceiver());
 			System.out.println("db loaded from cache");
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
@@ -19,7 +19,7 @@ public class DatabaseUpdateTest {
 		}
 		
 		System.out.println("updating...");
-		CardDatabaseManager.updateDatabase(db, new StatusReceiver() {
+		GathererManager.updateDatabase(db, new StatusReceiver() {
 			public void setCompleted(int completed) {
 				System.out.println(completed);
 			}
@@ -34,7 +34,7 @@ public class DatabaseUpdateTest {
 		});
 		
 		System.out.println("saving...");
-		CardDatabaseManager.cacheDatabase(db);
+		CardDatabase.cacheDatabase(db);
 		
 		System.out.println("looks good.");
 	}
