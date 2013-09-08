@@ -24,7 +24,7 @@ public class ImageCache {
 		fileMap = new HashMap<>();
 		
 		File dir = new File(IMAGE_DIR + File.separator + "gatherer");
-		if (!dir.exists() && !dir.mkdir()) {
+		if (!dir.exists() && !dir.mkdirs()) {
 			throw new IOException("Tried to create directory '" + IMAGE_DIR + "' but failed - check that you have permissions for this folder");
 		}
 		for (File file : dir.listFiles()) {
