@@ -23,7 +23,7 @@ public class ImageCache {
 	public static void init() throws IOException {
 		fileMap = new HashMap<>();
 		
-		File dir = new File(IMAGE_DIR);
+		File dir = new File(IMAGE_DIR + File.separator + "gatherer");
 		if (!dir.exists() && !dir.mkdir()) {
 			throw new IOException("Tried to create directory '" + IMAGE_DIR + "' but failed - check that you have permissions for this folder");
 		}
@@ -62,7 +62,7 @@ public class ImageCache {
 		} else if (conn.getContentType().toLowerCase().equals("image/jpg") || conn.getContentType().toLowerCase().equals("image/jpeg")) {
 			filename = id + ".jpg";
 		}
-		File file = new File(IMAGE_DIR + File.separator + filename);
+		File file = new File(IMAGE_DIR + File.separator + "gatherer" + File.separator + filename);
 		
 		receiver.setCompleted(0);
 		receiver.setTotal(conn.getContentLength());
