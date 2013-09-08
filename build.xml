@@ -27,9 +27,10 @@
 	
 	<target name="build-zip" depends="build-jar">
 		<zip destfile="dist/${zipname}">
-			<fileset dir="dist" includes="*.jar" excludes="**.DS_Store" />
+			<fileset dir="dist" includes="*.jar, *.sh, *.bat" excludes="**.DS_Store" />
 			<fileset dir="." includes="cards.db" />
 			<fileset dir="." includes="LICENSE" />
+			
 		</zip>
 	</target>
 </project>

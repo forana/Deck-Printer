@@ -40,7 +40,6 @@ A single folder containing images with the intended card directly inside it can 
 Supported image formats are JPG and PNG.
 
 ## TODO
-+ bat/sh scripts for running jar
 + Allow printing of oversized (commander / archenemy / planechase / vanguard) cards at correct size.
 + Corner normalization
 + Center printed page on the paper
