@@ -27,11 +27,21 @@ public class PrintablePage implements Printable {
 	}
 	
 	public int print(Graphics g, PageFormat pf, int index) {
+		Graphics2D g2 = (Graphics2D)g;
 		int xoff = (int)Math.ceil(pf.getImageableX() / SCALE);
 		int yoff = (int)Math.ceil(pf.getImageableY() / SCALE);
 		double width = pf.getImageableWidth() / SCALE;
 		double height = pf.getImageableHeight() / SCALE;
-		((Graphics2D)g).scale(SCALE, SCALE);
+		g2.scale(SCALE, SCALE);
+		
+		if (shouldRotate(width, height, SCALED_CARD_WIDTH, SCALED_CARD_HEIGHT)) {
+			g2.translate(-xoff, -yoff);
+			g2.rotate(Math.PI/2);
+			g2.translate(yoff, xoff-width);
+			double t = width;
+			width = height;
+			height = t;
+		}
 		
 		int hcards = (int)Math.floor(width / SCALED_CARD_WIDTH);
 		int vcards = (int)Math.floor(height / SCALED_CARD_HEIGHT);
@@ -61,5 +71,15 @@ public class PrintablePage implements Printable {
 		}
 		
 		return Printable.PAGE_EXISTS;
+	}
+	
+	private static boolean shouldRotate(double areaWidth, double areaHeight, double cardWidth, double cardHeight) {
+		int nrh = (int)Math.floor(areaWidth / cardWidth);
+		int nrv = (int)Math.floor(areaHeight / cardHeight);
+		
+		int rh = (int)Math.floor(areaHeight / cardWidth);
+		int rv = (int)Math.floor(areaWidth / cardHeight);
+		
+		return (rh * rv) > (nrh * nrv);
 	}
 }
