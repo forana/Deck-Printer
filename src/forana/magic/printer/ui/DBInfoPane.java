@@ -15,7 +15,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-import forana.magic.printer.StatusDialog;
 import forana.magic.printer.lookup.CardDatabase;
 import forana.magic.printer.lookup.SetStats;
 

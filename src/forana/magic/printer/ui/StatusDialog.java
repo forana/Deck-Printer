@@ -1,4 +1,4 @@
-package forana.magic.printer;
+package forana.magic.printer.ui;
 
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
+
+import forana.magic.printer.StatusReceiver;
 
 public class StatusDialog extends JDialog implements StatusReceiver {
 	private static final long serialVersionUID = 1L;

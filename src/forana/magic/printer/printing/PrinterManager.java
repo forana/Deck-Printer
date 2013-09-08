@@ -1,4 +1,4 @@
-package forana.magic.printer;
+package forana.magic.printer.printing;
 
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;

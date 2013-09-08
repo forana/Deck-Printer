@@ -1,4 +1,4 @@
-package forana.magic.printer;
+package forana.magic.printer.printing;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -6,6 +6,8 @@ import java.awt.Image;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.util.List;
+
+import forana.magic.printer.StatusReceiver;
 
 public class PrintablePage implements Printable {
 	private static final double DESIRED_DPI = 300;

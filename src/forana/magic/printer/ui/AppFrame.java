@@ -21,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import forana.magic.printer.StatusDialog;
 import forana.magic.printer.lookup.CardDatabase;
 import forana.magic.printer.lookup.GathererManager;
 import forana.magic.printer.lookup.ListLoader;

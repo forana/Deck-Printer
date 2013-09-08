@@ -12,15 +12,15 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-import forana.magic.printer.PrintablePage;
-import forana.magic.printer.PrinterManager;
-import forana.magic.printer.StatusDialog;
 import forana.magic.printer.model.CardRow;
+import forana.magic.printer.printing.PrintablePage;
+import forana.magic.printer.printing.PrinterManager;
 
 public class CardListPane extends JTable implements ComponentProvider {
 	private static final long serialVersionUID = 1L;
@@ -42,6 +42,10 @@ public class CardListPane extends JTable implements ComponentProvider {
 	@Override
 	public Iterable<Component> getProvidedComponents(final Frame target) {
 		List<Component> components = new LinkedList<>();
+		
+		JCheckBox roundCornersCheckbox = new JCheckBox("Attempt to normalize borders", true);
+		components.add(roundCornersCheckbox);
+		
 		JButton printButton = new JButton("Print");
 		printButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -58,6 +62,7 @@ public class CardListPane extends JTable implements ComponentProvider {
 		});
 		printButton.setEnabled(model.allCardsHaveImages());
 		components.add(printButton);
+		
 		return components;
 	}
 	
