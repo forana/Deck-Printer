@@ -82,7 +82,10 @@ public class CardListPane extends JTable implements ComponentProvider {
 		public List<Image> getImages() throws IOException {
 			List<Image> images = new LinkedList<>();
 			for (CardRow row : this.rows) {
-				images.add(ImageIO.read(row.source.getSelectedPath()));
+				Image image = ImageIO.read(row.source.getSelectedPath());
+				for (int i=0; i<row.quantity; i++) {
+					images.add(image);
+				}
 			}
 			return images;
 		}
