@@ -13,12 +13,14 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 import forana.magic.printer.model.CardRow;
+import forana.magic.printer.printing.CardFormat;
 import forana.magic.printer.printing.PrintablePage;
 import forana.magic.printer.printing.PrinterManager;
 
@@ -43,17 +45,24 @@ public class CardListPane extends JTable implements ComponentProvider {
 	public Iterable<Component> getProvidedComponents(final Frame target) {
 		List<Component> components = new LinkedList<>();
 		
-		JCheckBox roundCornersCheckbox = new JCheckBox("Attempt to normalize borders", true);
+		final JCheckBox roundCornersCheckbox = new JCheckBox("Attempt to normalize borders", true);
 		components.add(roundCornersCheckbox);
+		
+		final JComboBox<CardFormat> cardSizeComboBox = new JComboBox<>(CardFormat.values());
+		components.add(cardSizeComboBox);
 		
 		JButton printButton = new JButton("Print");
 		printButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					List<Image> images = model.getImages();
+					List<Image> images = model.getImages(roundCornersCheckbox.isSelected());
 					StatusDialog sd = new StatusDialog(target);
-					PrintablePage page = new PrintablePage(images, sd);
+					
+					PrintablePage page = new PrintablePage(images,
+						cardSizeComboBox.getItemAt(cardSizeComboBox.getSelectedIndex()),
+						sd);
 					PrinterManager.promptToPrint(page);
+					
 					sd.dispose();
 				} catch (IOException | PrinterException ex) {
 					JOptionPane.showMessageDialog(target, "Problem printing:\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -84,7 +93,7 @@ public class CardListPane extends JTable implements ComponentProvider {
 			return true;
 		}
 		
-		public List<Image> getImages() throws IOException {
+		public List<Image> getImages(boolean roundCorners) throws IOException {
 			List<Image> images = new LinkedList<>();
 			for (CardRow row : this.rows) {
 				Image image = ImageIO.read(row.source.getSelectedPath());

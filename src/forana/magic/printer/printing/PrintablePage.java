@@ -23,7 +23,7 @@ public class PrintablePage implements Printable {
 	private List<Image> images;
 	private StatusReceiver receiver;
 	
-	public PrintablePage(List<Image> images, StatusReceiver receiver) {
+	public PrintablePage(List<Image> images, CardFormat format, StatusReceiver receiver) {
 		this.images = images;
 		this.receiver = receiver;
 	}
