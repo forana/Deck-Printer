@@ -19,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+import forana.magic.printer.image.CornerNormalizer;
 import forana.magic.printer.model.CardRow;
 import forana.magic.printer.printing.CardFormat;
 import forana.magic.printer.printing.PrintablePage;
@@ -97,6 +98,9 @@ public class CardListPane extends JTable implements ComponentProvider {
 			List<Image> images = new LinkedList<>();
 			for (CardRow row : this.rows) {
 				Image image = ImageIO.read(row.source.getSelectedPath());
+				if (roundCorners) {
+					image = CornerNormalizer.normalize(image);
+				}
 				for (int i=0; i<row.quantity; i++) {
 					images.add(image);
 				}
