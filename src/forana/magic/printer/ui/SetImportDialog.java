@@ -6,6 +6,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
@@ -75,8 +77,8 @@ public class SetImportDialog extends JDialog {
 		c.weightx = 1;
 		c.anchor = GridBagConstraints.LINE_END;
 		final JTextField setNameField = new JTextField(this.setName);
-		setNameField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		setNameField.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
 				thisDialog.setName = setNameField.getText();
 			}
 		});
