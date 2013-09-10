@@ -14,11 +14,11 @@ Prerequisite: You must have a Java 7 (or newer) JRE installed. I'd suggest using
 
 1. Download [printer.zip](https://github.com/forana/Deck-Printer/raw/master/dist/printer.zip)
 2. Extract
-3. Double-click deckprinter.jar
+3. Double-click printer.jar
 4. Enjoy!
 
 If double-clicking deckprinter.jar does not work, open a terminal/command prompt window at the extracted directory and type
-	java -jar deckprinter.jar
+	java -jar printer.jar
 (this will also show useful output if you're encountering problems)
 
 ## Supported Deck Formats
@@ -40,8 +40,5 @@ A single folder containing images with the intended card directly inside it can 
 Supported image formats are JPG and PNG.
 
 ## TODO
-+ Allow printing of oversized (commander / archenemy / planechase / vanguard) cards at correct size.
-+ Corner normalization
-+ Center printed page on the paper
 + Zoom in on hover (JTooltip is ridiculously unflexible)
 + Make code readable/resolve cleanup TODOs
