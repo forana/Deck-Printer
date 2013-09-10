@@ -14,18 +14,14 @@ public class PrintablePage implements Printable {
 	private static final double STANDARD_DPI = 72; // hey oracle, maybe this could be accessible somewhere instead of magic
 	private static final double SCALE = STANDARD_DPI / DESIRED_DPI;
 	
-	private static final double REAL_CARD_WIDTH = 2.48;
-	private static final double REAL_CARD_HEIGHT = 3.46;
-	
-	private static final int SCALED_CARD_WIDTH = (int)Math.round(REAL_CARD_WIDTH * DESIRED_DPI);
-	private static final int SCALED_CARD_HEIGHT = (int)Math.round(REAL_CARD_HEIGHT * DESIRED_DPI);
-	
 	private List<Image> images;
 	private StatusReceiver receiver;
+	private CardFormat format;
 	
 	public PrintablePage(List<Image> images, CardFormat format, StatusReceiver receiver) {
 		this.images = images;
 		this.receiver = receiver;
+		this.format = format;
 	}
 	
 	public int print(Graphics g, PageFormat pf, int index) {
@@ -36,7 +32,10 @@ public class PrintablePage implements Printable {
 		double height = pf.getImageableHeight() / SCALE;
 		g2.scale(SCALE, SCALE);
 		
-		if (shouldRotate(width, height, SCALED_CARD_WIDTH, SCALED_CARD_HEIGHT)) {
+		int scaledWidth = (int)Math.round(format.WIDTH * DESIRED_DPI);
+		int scaledHeight = (int)Math.round(format.HEIGHT * DESIRED_DPI);
+		
+		if (shouldRotate(width, height, scaledWidth, scaledHeight)) {
 			g2.rotate(Math.PI/2);
 			g2.translate(0, -(width + 2 * xoff));
 			double t = width;
@@ -47,12 +46,12 @@ public class PrintablePage implements Printable {
 			yoff = it;
 		}
 		
-		int hcards = (int)Math.floor(width / SCALED_CARD_WIDTH);
-		int vcards = (int)Math.floor(height / SCALED_CARD_HEIGHT);
+		int hcards = (int)Math.floor(width / scaledWidth);
+		int vcards = (int)Math.floor(height / scaledHeight);
 		int cardsPerPage = hcards * vcards;
 		
-		int xCentering = (int)Math.floor((width - (hcards * SCALED_CARD_WIDTH)) / 2);
-		int yCentering = (int)Math.floor((height - (vcards * SCALED_CARD_HEIGHT)) / 2);
+		int xCentering = (int)Math.floor((width - (hcards * scaledWidth)) / 2);
+		int yCentering = (int)Math.floor((height - (vcards * scaledHeight)) / 2);
 		
 		int startIndex = cardsPerPage * index;
 		if (startIndex >= this.images.size()) {
@@ -64,11 +63,11 @@ public class PrintablePage implements Printable {
 		int v = 0;
 		
 		while (cardIndex < startIndex + hcards * vcards && cardIndex < this.images.size()) {
-			Image scaled = this.images.get(cardIndex).getScaledInstance(SCALED_CARD_WIDTH, SCALED_CARD_HEIGHT, Image.SCALE_SMOOTH);
+			Image scaled = this.images.get(cardIndex).getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
 			
 			g.drawImage(scaled,
-				xoff + xCentering + h * SCALED_CARD_WIDTH,
-				yoff + yCentering + v * SCALED_CARD_HEIGHT,
+				xoff + xCentering + h * scaledWidth,
+				yoff + yCentering + v * scaledHeight,
 				null);
 			
 			h++;
