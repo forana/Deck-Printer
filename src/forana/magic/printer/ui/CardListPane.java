@@ -5,6 +5,7 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -97,7 +98,7 @@ public class CardListPane extends JTable implements ComponentProvider {
 		public List<Image> getImages(boolean roundCorners) throws IOException {
 			List<Image> images = new LinkedList<>();
 			for (CardRow row : this.rows) {
-				Image image = ImageIO.read(row.source.getSelectedPath());
+				BufferedImage image = ImageIO.read(row.source.getSelectedPath());
 				if (roundCorners) {
 					image = CornerNormalizer.normalize(image);
 				}
