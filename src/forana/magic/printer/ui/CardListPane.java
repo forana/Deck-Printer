@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -47,6 +48,9 @@ public class CardListPane extends JTable implements ComponentProvider {
 	public Iterable<Component> getProvidedComponents(final Frame target) {
 		List<Component> components = new LinkedList<>();
 		
+		final JCheckBox shuffleCheckbox = new JCheckBox("Shuffle printed cards", false);
+		components.add(shuffleCheckbox);
+		
 		final JCheckBox roundCornersCheckbox = new JCheckBox("Attempt to normalize borders", true);
 		components.add(roundCornersCheckbox);
 		
@@ -58,6 +62,11 @@ public class CardListPane extends JTable implements ComponentProvider {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					List<Image> images = model.getImages(roundCornersCheckbox.isSelected());
+					
+					if (shuffleCheckbox.isSelected()) {
+						Collections.shuffle(images);
+					}
+					
 					StatusDialog sd = new StatusDialog(target);
 					
 					PrintablePage page = new PrintablePage(images,
