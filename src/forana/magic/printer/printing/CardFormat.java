@@ -3,7 +3,8 @@ package forana.magic.printer.printing;
 public enum CardFormat {
 	STANDARD(2.48, 3.46, "Standard Card Size"),
 	OVERSIZED(3.46, 4.96, "Oversized (Commander, Archenemy)"),
-	PLANE(4.96, 3.46, "Sideways (Planechase)");
+	PLANE(4.96, 3.46, "Sideways (Planechase)"),
+	SMALLPLANE(3.46, 2.48, "Small Sideways");
 	
 	public final double WIDTH;
 	public final double HEIGHT;
